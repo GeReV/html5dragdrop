@@ -1,80 +1,85 @@
-HTML5 Sortable jQuery Plugin
+HTML5 Drag & Drop jQuery Plugin
 ============================
 
-**[Demos & Documentation](http://farhadi.ir/projects/html5sortable)**
+Based on [html5sortable](http://farhadi.ir/projects/html5sortable/) ([GitHub](https://github.com/farhadi/html5sortable)) by [Ali Farhadi](http://farhadi.ir/)
+
+**[Demo](http://gerev.github.com/html5dragdrop)**
 
 Features
 --------
-* Less than 1KB (minified and gzipped).
+* Less than 2.5KB (minified and gzipped).
 * Built using native HTML5 drag and drop API.
-* Supports both list and grid style layouts.
 * Similar API and behaviour to jquery-ui sortable plugin.
 * Works in IE 5.5+, Firefox 3.5+, Chrome 3+, Safari 3+ and, Opera 12+.
 
 Usage
 -----
-Use `sortable` method to create a sortable list:
+
+Draggable Specific
+=====
+
+Use `draggable` method to create a draggable element:
 
 ``` javascript
-$('.sortable').sortable();
+$('.draggable').draggable();
 ```
-Use `.sortable-dragging` and `.sortable-placeholder` CSS selectors to change the styles of a dragging item and its placeholder respectively.
+Use `.draggable` and `.draggable-dragging` CSS selectors to change the styles of a dragging item.
 
-Use `sortupdate` event if you want to do something when the order changes (e.g. storing the new order):
-
-``` javascript
-$('.sortable').sortable().bind('sortupdate', function(e, ui) {
-    //ui.item contains the current dragged element.
-    //Triggered when the user stopped sorting and the DOM position has changed.
-});
-```
-
-Use `items` option to specifiy which items inside the element should be sortable:
-
-``` javascript
-$('.sortable').sortable({
-    items: ':not(.disabled)'
-});
-```
 Use `handle` option to restrict drag start to the specified element:
 
 ``` javascript
-$('.sortable').sortable({
+$('.draggable').draggable({
     handle: 'h2'
 });
 ```
-Setting `forcePlaceholderSize` option to true, forces the placeholder to have a height:
+
+Droppable Specific
+=====
+
+Use `droppable` method to create a droppable element:
 
 ``` javascript
-$('.sortable').sortable({
-    forcePlaceholderSize: true 
+$('.droppable').droppable();
+```
+Use `.droppable` CSS selectors to change the style of a droppable.
+
+Use `accept` option to restrict items accepted by the droppable:
+
+``` javascript
+$('.droppable').droppable({
+    accept: '.some-draggable'
 });
 ```
 
-Use `connectWith` option to create connected lists:
+Use `addClasses` to have the `activeClass` added to the droppable when an accepted item starts dragging and `hoverClass` added when the item is above the droppable.
 
 ``` javascript
-$('#sortable1, #sortable2').sortable({
-    connectWith: '.connected'
+$('.droppable').droppable({
+    addClasses: true,
+    activeClass: 'active' // Optional. Default: 'droppable-active'.
+    hoverClass: 'hover' // Optional. Default: 'droppable-hover'.
 });
 ```
 
-To remove the sortable functionality completely:
+To remove the draggable or droppable functionality completely:
 
 ``` javascript
-$('.sortable').sortable('destroy');
+$('.draggable').draggable('destroy');
+$('.droppable').droppable('destroy');
 ```
 
-To disable the sortable temporarily:
+To disable the draggable or droppable temporarily:
 
 ``` javascript
-$('.sortable').sortable('disable');
+$('.draggable').draggable('disable');
+$('.droppable').droppable('disable');
 ```
 
-To enable a disabled sortable:
+To enable a disabled draggable or droppable:
 
 ``` javascript
-$('.sortable').sortable('enable');
+$('.draggable').draggable('enable');
+$('.droppable').droppable('eable');
 ```
 
 The API is compatible with jquery-ui. So you can use jquery-ui as a polyfill in older browsers:
@@ -82,12 +87,10 @@ The API is compatible with jquery-ui. So you can use jquery-ui as a polyfill in 
 ``` javascript
 yepnope({
     test: Modernizr.draganddrop,
-    yep: 'jquery.sortable.js',
+    yep: 'jquery.dragdrop.js',
     nope: 'jquery-ui.min.js',
     complete: function() {
-        $('.sortable').sortable().bind('sortupdate', function(e, ui) {
-            //Store the new order.
-        }
+        $('.sortable').sortable();
     }
 });
 ```
