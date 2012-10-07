@@ -1,5 +1,5 @@
 HTML5 Drag & Drop jQuery Plugin
-============================
+===============================
 
 Based on [html5sortable](http://farhadi.ir/projects/html5sortable/) ([GitHub](https://github.com/farhadi/html5sortable)) by [Ali Farhadi](http://farhadi.ir/)
 
@@ -79,7 +79,7 @@ To enable a disabled draggable or droppable:
 
 ``` javascript
 $('.draggable').draggable('enable');
-$('.droppable').droppable('eable');
+$('.droppable').droppable('enable');
 ```
 
 The API is compatible with jquery-ui. So you can use jquery-ui as a polyfill in older browsers:
