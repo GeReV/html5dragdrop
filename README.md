@@ -3,20 +3,19 @@ HTML5 Drag & Drop jQuery Plugin
 
 Based on [html5sortable](http://farhadi.ir/projects/html5sortable/) ([GitHub](https://github.com/farhadi/html5sortable)) by [Ali Farhadi](http://farhadi.ir/)
 
-**[Demo](http://gerev.github.com/html5dragdrop)**
+### **[Demo](http://gerev.github.com/html5dragdrop)**
 
 Features
 --------
 * Less than 2.5KB (minified and gzipped).
 * Built using native HTML5 drag and drop API.
-* Similar API and behaviour to jquery-ui sortable plugin.
+* Similar API and behaviour to jquery-ui draggable and droppable plugin.
 * Works in IE 5.5+, Firefox 3.5+, Chrome 3+, Safari 3+ and, Opera 12+.
 
 Usage
 -----
 
-Draggable Specific
-=====
+### Draggable Specific
 
 Use `draggable` method to create a draggable element:
 
@@ -33,8 +32,7 @@ $('.draggable').draggable({
 });
 ```
 
-Droppable Specific
-=====
+### Droppable Specific
 
 Use `droppable` method to create a droppable element:
 
@@ -90,7 +88,8 @@ yepnope({
     yep: 'jquery.dragdrop.js',
     nope: 'jquery-ui.min.js',
     complete: function() {
-        $('.sortable').sortable();
+        $('.draggable').draggable();
+        $('.droppable').droppable();
     }
 });
 ```
