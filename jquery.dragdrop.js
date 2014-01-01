@@ -149,9 +149,10 @@
 
           e.stopPropagation();
 
+          dragged = dragging;
           dragging.trigger('dragend.h5dnd');
 
-          options.drop && options.drop.call(dragging);
+          options.drop && options.drop.call(this, dragged);
 
           return false;
         });
