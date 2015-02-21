@@ -87,74 +87,75 @@
   };
 
   $.fn.droppable = function(options) {
-  	var method = String(options);
+    var method = String(options);
 
-  	options = $.extend({
-  		accept: '*',
-  		addClasses: false,
-  		activeClass: 'droppable-active',
-  		hoverClass: 'droppable-hover'
-  	}, options);
+    options = $.extend({
+      accept: '*',
+      addClasses: false,
+      activeClass: 'droppable-active',
+      hoverClass: 'droppable-hover'
+    }, options);
 
-  	return this.each(function() {
-  		if (/^enable|disable|destroy$/.test(method)) {
-  			var self = $(this);
+    return this.each(function() {
+      if (/^enable|disable|destroy$/.test(method)) {
+        var self = $(this);
 
-  			if (method == 'destroy' || method == 'disable') {
-  				self.add(this)
-  					.off('dragover.h5dnd dragenter.h5dnd dragout.h5dnd dragleave.h5dnd drop.h5dnd');
-  			}
+        if (method == 'destroy' || method == 'disable') {
+          self.add(this)
+            .off('dragover.h5dnd dragenter.h5dnd dragout.h5dnd dragleave.h5dnd drop.h5dnd');
+        }
 
-  			return;
-  		}
+        return;
+      }
 
-  		var isHandle, index, self = $(this);
+      var isHandle, index, self = $(this);
 
-  		callbacks.dragstart.add(function() {
-  		  self.toggleClass(options.activeClass, dragging && dragging.is(options.accept));
-  		});
+      callbacks.dragstart.add(function() {
+        self.toggleClass(options.activeClass, dragging && dragging.is(options.accept));
+      });
 
-  		callbacks.dragstop.add(function() {
-  		  self.removeClass(options.activeClass);
-  		});
+      callbacks.dragstop.add(function() {
+        self.removeClass(options.activeClass);
+      });
 
-  		self
-  		  .addClass('droppable')
-  		  .add(this)
-  		  .on('dragover.h5dnd dragenter.h5dnd', function(e) {
-    			if (self && !self.is(dragging) && dragging && !dragging.is(options.accept)) {
-    				return true;
-    			}
+      self
+        .addClass('droppable')
+        .add(this)
+        .on('dragover.h5dnd dragenter.h5dnd', function(e) {
+          if (!self.is(dragging) && !dragging.is(options.accept)) {
+            return true;
+          }
 
-    			self.toggleClass(options.hoverClass, options.addClasses);
+          self.toggleClass(options.hoverClass, options.addClasses);
 
-    			e.preventDefault();
-    			e.originalEvent.dataTransfer.dropEffect = 'move';
+          e.preventDefault();
+          e.originalEvent.dataTransfer.dropEffect = 'move';
 
-    			options.over && options.over.call(self);
-
-    			return false;
-    		})
-    		.on('dragout.h5dnd dragleave.h5dnd', function(e) {
-    		  self.removeClass(options.hoverClass);
-
-    		  e.preventDefault();
-
-    		  options.out && options.out.call(self);
-
-    		  return false;
-    		})
-    		.on('drop.h5dnd', function(e) {
-  		    self.removeClass(options.hoverClass);
-
-  		    e.stopPropagation();
-
-          dragging.trigger('dragend.h5dnd');
-
-          options.drop && options.drop.call(dragging);
+          options.over && options.over.call(self);
 
           return false;
-    		});
-  	});
+        })
+        .on('dragout.h5dnd dragleave.h5dnd', function(e) {
+          self.removeClass(options.hoverClass);
+
+          e.preventDefault();
+
+          options.out && options.out.call(self);
+
+          return false;
+        })
+        .on('drop.h5dnd', function(e) {
+          self.removeClass(options.hoverClass);
+
+          e.stopPropagation();
+
+          dragged = dragging;
+          dragging.trigger('dragend.h5dnd');
+
+          options.drop && options.drop.call(this, dragged);
+
+          return false;
+        });
+    });
   };
 })(jQuery);
